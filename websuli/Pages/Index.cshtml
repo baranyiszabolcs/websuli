@@ -1,0 +1,16 @@
+﻿@page
+@using Microsoft.AspNetCore.Http
+@model IndexModel
+@{
+    ViewData["Title"] = "Home page";
+}
+
+<div class="text-center">
+    <h1 class="display-4">Üdvözlöm a Websuliban</h1>
+    <form method="POST">
+        Gyerek neve: @HttpContext.Session.GetString(IndexModel.SessionKeyName)
+        <div> @Html.DisplayNameFor(gm => gm.gyereknev):<input asp-for="gyereknev" class="form-control-lg" width="30" /></div>
+        <button type="submit">regisztrál</button>
+    </form>
+
+</div>

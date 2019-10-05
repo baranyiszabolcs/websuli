@@ -1,0 +1,37 @@
+﻿@page
+@model websuli.Pages.testpageModel
+@*
+    For more information on enabling MVC for empty projects, visit http://go.microsoft.com/fwlink/?LinkID=397860
+*@
+<style>
+    .grid-container {
+        display: grid;
+        grid-template-columns: 50px 50px 50px 50px;
+    }
+</style>
+<label> @Model.MessageLabel</label>
+<form method="post">
+    NON Bindingnev<input name="nonbindignev" />
+    NON Bindingnev asp for<input asp-for="nonbindignev" />
+    Bindingnev<input name="bindingnev" />
+    Bindingnev asp for<input asp-for="bindingnev" />
+    <button type="submit">Submit</button>
+    <button type="button" asp-action="Baction">BUtton Type</button>
+
+</form>
+<br />
+<h5>  ------------- Másik Form ----------------  </h5>
+<!-- asp-page-handler="MasikForm"-->
+<form method="POST" asp-page-handler="MasikForm">
+
+    <button type="submit">Sub 0</button>
+    <button type="submit" asp-page-handler="MasikForm" asp-route-buttonid="1">Sub 1</button>
+    <div class="grid-container">
+        @for (int ix = 0; ix < 13; ix++)
+        {<div>
+                <button type="submit" asp-page-handler="MasikFormWithParam" asp-route-buttonid="@ix">Sub @ix</button>
+            </div>
+        }
+    </div>
+</form>
+

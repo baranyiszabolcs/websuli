@@ -1,0 +1,15 @@
+﻿@page
+@model websuli.Pages.MatekModel
+@using Microsoft.AspNetCore.Http
+@{
+    ViewData["Title"] = "Matek";
+    Layout = "~/Pages/Shared/_Layout.cshtml";
+}
+
+<h1>Matek</h1>
+<h2 class="display-2">  @HttpContext.Session.GetString("FeladatTipus") gyakorlása </h2>
+<h2 class="display-2"> Hátralévő feladatszám: @HttpContext.Session.GetString("Feladatszam")  </h2>
+<form method="POST" asp-action="MatekFeladat">
+    <input asp-for="valasz" class="form-control-lg" width="30" />
+
+</form>

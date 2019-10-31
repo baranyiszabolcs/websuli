@@ -1,4 +1,5 @@
 ﻿@page
+
 @model websuli.Pages.MatekModel
 @using Microsoft.AspNetCore.Http
 @{
@@ -7,9 +8,21 @@
 }
 
 <h1>Matek</h1>
-<h2 class="display-2">  @HttpContext.Session.GetString("FeladatTipus") gyakorlása </h2>
-<h2 class="display-2"> Hátralévő feladatszám: @HttpContext.Session.GetString("Feladatszam")  </h2>
-<form method="POST" asp-action="MatekFeladat">
-    <input asp-for="valasz" class="form-control-lg" width="30" />
+<h3>  @HttpContext.Session.GetString("FeladatTipus") gyakorlása </h3>
+<h3>
+    Hátralévő feladatszám: @Model.hatravan;
+</h3>
+<h3>  feladatszám: @Model.fsor.cnt </h3>
 
+<form method="POST" asp-page-handler="MatekFeladat">
+    <input type="hidden" asp-for="Id" />
+    <input type="hidden" asp-for="startTime" />
+    <input type="hidden" asp-for="feladvanyTxt" />
+    Feladat:   @Model.feladvanyTxt
+    <input asp-for="valasz" class="form-control-lg" width="30" />
+    <button type="submit"> Mehet</button>
+    <br />
+    Eredmény: @Model.eredmenyTxt
+    <br />
+    Idő :@Model.feladvany.ValaszidoSec
 </form>

@@ -10,13 +10,15 @@
     }
 </style>
 <label> @Model.MessageLabel</label>
+<h3 class="text-center"> @ViewData["Title"]   viewdata név: @ViewData["viewdatanev"] </h3>
 <form method="post">
-    NON Bindingnev<input name="nonbindignev" />
-    NON Bindingnev asp for<input asp-for="nonbindignev" />
-    Bindingnev<input name="bindingnev" />
-    Bindingnev asp for<input asp-for="bindingnev" />
+    NON Bindingnev asp for:<input asp-for="nonbindignev" />
+    <br />
+    Bindingnev asp for:<input asp-for="bindingnev" />
+    szam bevitel: <input asp-for="sorszam" />
     <button type="submit">Submit</button>
-    <button type="button" asp-action="Baction">BUtton Type</button>
+    <input type="text" name="email" />
+    <button type=submit asp-page-handler="MatekSetupParam">MatekParam</button>
 
 </form>
 <br />
@@ -24,7 +26,7 @@
 <!-- asp-page-handler="MasikForm"-->
 <form method="POST" asp-page-handler="MasikForm">
 
-    <button type="submit">Sub 0</button>
+    <button type="submit">Submit</button>
     <button type="submit" asp-page-handler="MasikForm" asp-route-buttonid="1">Sub 1</button>
     <div class="grid-container">
         @for (int ix = 0; ix < 13; ix++)
@@ -33,5 +35,16 @@
             </div>
         }
     </div>
+
+
+</form>
+<form method="post" asp-page-handler="Baction">
+>
+    <input asp-for="fsor.sornev" />
+    <input asp-for="fsor.eredmenypct" />
+    <div>
+        @Html.DisplayNameFor(gm => gm.fsor.kiadasDatum): @Model.fsor.kiadasDatum;
+    </div>
+    <button type="submit" asp-page-handler="Baction">CacheTest</button>
 </form>
 

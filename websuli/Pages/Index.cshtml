@@ -1,5 +1,6 @@
 ﻿@page
 @using Microsoft.AspNetCore.Http
+@using websuli.Model
 @model IndexModel
 @{
     ViewData["Title"] = "Home page";
@@ -7,21 +8,20 @@
 
     <div class="text-center">
         <h1 class="display-4">Üdvözlöm a Websuliban</h1>
-        <h3 class="text-center"> @ViewData["PageMessage"]</h3>
-        <h3 class="text-center"> Modellen keresztül  @Model.PageMessage</h3>
+      
+
 
         <form method="POST">
-            Gyerek neve: @HttpContext.Session.GetString(IndexModel.SessionKeyGyereknev)
-            <div> @Html.DisplayNameFor(gm => gm.gyereknev):<input name="gyereknev" class="form-control-lg" width="30" /></div>
+
+            <div> @Html.DisplayNameFor(gm => gm.fsor.gyerek):<input asp-for="fsor.gyerek" class="form-control-lg" width="30" /></div>
+            <select asp-for="fsor.feladatTipus" asp-items="FealdatsorLOV.FeladatTipusLista" >  </select>
+            <input asp-for="fsor.feladatszam" class="form-control-lg" width="30" />          
             <button type="submit">regisztrál</button>
-            <select asp-for="feladattipus" asp-items="Model.FeladatTipusok">  </select>
-            <input asp-for="feladatszam" class="form-control-lg" width="30" />
-            <input type="text" name="email" />
-            <button type=submit asp-page-handler="MatekSetup">Matek</button>
-            
-            <button type=submit asp-page-handler="MatekSetupParam">Matek</button>
+            <button type=submit asp-page-handler="Matek">Matekozzunk!</button>
+
+
         </form>
-        <h3 class="text-center"> @Model.feladattipus</h3>
+ 
 
-
+        
     </div>

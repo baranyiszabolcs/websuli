@@ -5,35 +5,75 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
-using WebMatek.Models;
+using Microsoft.Extensions.Caching.Memory;
+using websuli.Model;
 
 namespace websuli.Pages
 {
     public class MatekModel : PageModel
     {
+
+        [BindProperty]
+        public string valasz { get; set; }
+        [BindProperty]
+        public Guid Id { get; set; }
+        [BindProperty]
+        public string feladvanyTxt { get; set; }
+        [BindProperty]
+        public int hatravan { get; set; }
+        [BindProperty]
+        public DateTime startTime { get; set; }
+        public string eredmenyTxt { get; set; }
+        public Feladatsor fsor { get; set; }
         public string feladattipus { get; set; }
         public Feladat feladvany { get; set; }
-        public string feladvanyTxt { get; set; }
-        public int valasz { get; set; }
 
-        public void OnGet()
+
+        private readonly IMemoryCache _cache;
+        public MatekModel(IMemoryCache cache)
         {
-            if (string.IsNullOrEmpty(HttpContext.Session.GetString("FeladatTipus")))
-                feladattipus = "Szorzas";
+            _cache = cache;
+        }
+        public IActionResult OnGet(Guid id)
+        {
+            
+            if (id == Guid.Empty)
+            { Id = Guid.NewGuid();
+                fsor = new Feladatsor();
+                _cache.Set<Feladatsor>(Id, fsor);
+            }
             else
-                feladattipus = HttpContext.Session.GetString("FeladatTipus");
+                fsor = _cache.Get<Feladatsor>(id);
 
-           // feladvany = Feladatsor.CreateFeladat(feladattipus); 
+            feladvany = Feladatsor.GenerateFeladat(fsor.feladatTipus);
+            feladvanyTxt = feladvany.Generate();
+            fsor.AddFeladatToList(feladvany);
+            startTime = DateTime.Now;
+            hatravan = fsor.feladatszam - fsor.cnt;
+            return Page();
         }
 
-        public void OnPost()
-        {
-            var fl = feladattipus;
-        }
+
 
         public IActionResult OnPostMatekFeladat()
         {
-            feladvany.Evaluate(valasz);
+            
+            fsor = _cache.Get<Feladatsor>(Id);
+            feladvany = fsor.feladatlista[fsor.cnt];
+            eredmenyTxt = feladvany.Evaluate(valasz);
+            feladvany.ValaszidoSec = (int)DateTime.Now.Subtract(startTime).TotalSeconds;
+            fsor.UpdateFeladat( feladvany);
+            if (eredmenyTxt=="OK")
+            {
+                // ez csak ha vegyes feladatok vannak
+                //feladvany = Feladatsor.GenerateFeladat(fsor.feladatTipus);
+                feladvanyTxt = feladvany.Generate();
+            }
+            fsor.AddFeladatToList(feladvany);
+            startTime = DateTime.Now;
+
+            hatravan = fsor.feladatszam - fsor.cnt;
+            ModelState.Clear();
             return Page();
         }
     }

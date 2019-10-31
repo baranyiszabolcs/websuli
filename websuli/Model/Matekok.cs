@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Newtonsoft.Json;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -12,23 +13,25 @@ namespace websuli.Model
         protected Random rnd;
         public MatekFeladat()
         {
-            rnd = new Random(10);
+            rnd = new Random();
         }
 
     }
     public class Szorzotabla : MatekFeladat
     {
-
+        
         public int Szorzando { get; set; }
         public int Szorzo { get; set; }
         public override string Generate()
         {
+            rnd = new Random();
             Szorzando = rnd.Next(10);
             Szorzo = rnd.Next(10);
             Helyesvalasz = (Szorzando * Szorzo).ToString();
             StringBuilder sb = new StringBuilder(" ");
-            return sb.AppendFormat("%d * %d = ", Szorzando, Szorzo).ToString();
+            return sb.AppendFormat("{0} * {1} = ", Szorzando, Szorzo).ToString();
         }
+
     }
 
     public class OsszeadKivon : MatekFeladat
@@ -36,6 +39,7 @@ namespace websuli.Model
         StringBuilder sb = new StringBuilder(" ");
         public int A { get; set; }
         public int B { get; set; }
+        [JsonIgnore]
         public int limit = 100;
         public override string Generate()
         {
@@ -56,7 +60,6 @@ namespace websuli.Model
             }
 
         }
-
 
     }
 }

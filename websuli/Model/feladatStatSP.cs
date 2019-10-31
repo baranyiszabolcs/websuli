@@ -14,11 +14,11 @@ using System.Linq;
 namespace WebMatek.Data
 {
 
-    public class SzorzotablaSP
+    public class feladatStatSP
     {
         private readonly string _connectionString;
 
-        public SzorzotablaSP(IConfiguration configuration)
+        public feladatStatSP(IConfiguration configuration)
         {
             _connectionString = configuration.GetConnectionString("WebmatekDB");
         }
@@ -70,7 +70,7 @@ namespace WebMatek.Data
             {
                 Szorzando = (int)reader["Id"],
                 Szorzo = (int)reader["Value1"],
-                Feladatsor = (int)reader["Value2"]
+               
             };
         }
 
@@ -159,7 +159,7 @@ namespace ASPNETCore_StoredProcs.Data
             {
                 Szorzando = (int)reader["Id"],
                 Szorzo = (int)reader["Value1"],
-                Gyerekvalasz = (int)reader["Value2"]
+                //Gyerekvalasz = (int)reader["Value2"]
             };
         }
 
@@ -194,7 +194,7 @@ namespace ASPNETCore_StoredProcs.Data
                 using (SqlCommand cmd = new SqlCommand("InsertValue", sql))
                 {
                     cmd.CommandType = System.Data.CommandType.StoredProcedure;
-                    cmd.Parameters.Add(new SqlParameter("@value1", value.Feladatsor));
+                    //cmd.Parameters.Add(new SqlParameter("@value1", value.Feladatsor));
                     cmd.Parameters.Add(new SqlParameter("@value2", value.Gyerekvalasz));
                     await sql.OpenAsync();
                     await cmd.ExecuteNonQueryAsync();

@@ -7,7 +7,8 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.AspNetCore.Mvc.Rendering;
-using WebMatek.Models;
+using Microsoft.Extensions.Caching.Memory;
+using websuli.Model;
 
 namespace websuli.Pages
 {
@@ -15,66 +16,36 @@ namespace websuli.Pages
     {
         [ViewData]
         public string PageMessage {get;set;}  // can be accessed through view data and as well as Model.
-
-
         [BindProperty]
-        [Display(Name = "Gyerek Neve")]
-        public string gyereknev { get; set; }
-
-        public const string SessionKeyGyereknev = "Gyereknev";
-        
-        public string feladattipus { get; set; } 
-        public int feladatszam { get; set; } 
+        public Feladatsor fsor { get; set; } = new Feladatsor();
+   
 
         public string email { get; set; }   // non binded
-        public List<SelectListItem> FeladatTipusok { get; } = new List<SelectListItem>
+        // on way
+        public List<SelectListItem> FeladatTipusok { get; } = FealdatsorLOV.FeladatTipusLista;
+
+
+        private readonly IMemoryCache _cache;
+        public IndexModel(IMemoryCache cache)
         {
-            new SelectListItem { Value = "Osszeadas", Text = "Összeadás" },
-            new SelectListItem { Value = "Szorzas", Text = "Szorzás" },
-            new SelectListItem { Value = "Szorzas/Osztas", Text = "Szorzás / Osztás"  },
-            new SelectListItem { Value = "Zarojeles", Text = "Zárójles kifejezéek"  },
-        };
+            _cache = cache;
+        }
         public void OnGet()
         {
-            PageMessage = "Titkos Üzenet";
-            /// razor oldalon a session változó  @HttpContext.Session.GetInt32("FeladatTipus")
-            feladattipus = "Zarojeles";  // default
-            gyereknev = "Maya";
-            if (string.IsNullOrEmpty(HttpContext.Session.GetString("Gyereknev")))
-            {
-                HttpContext.Session.SetString(SessionKeyGyereknev, "Anonym");
-                HttpContext.Session.SetInt32("Feladatsor", 0);
-                HttpContext.Session.SetString("FeladatTipus", feladattipus);
-                HttpContext.Session.SetInt32("Feladatszam", 100);
-                HttpContext.Session.SetInt32("Helyes",0);
-                HttpContext.Session.SetInt32("Rossz",0);
-            }
-            
-
+            fsor = new Feladatsor();
         }
 
         public void OnPost()
-        {
-
-            if(gyereknev!="")
-                HttpContext.Session.SetString(SessionKeyGyereknev, gyereknev);
-         
-            HttpContext.Session.SetInt32("Feladatszam", feladatszam);
-            HttpContext.Session.SetString("FeladatTipus", feladattipus);
-
-            RedirectToPage("./Matek");
+        {        
+            HttpContext.Session.SetString("FeladatTipus", "szorszas");       
         }
 
-        public async void OnPostMatekSetupAsync()
-        {
-            PageMessage = "MateK Setup : " + email + "  /   " + feladattipus+"   gy:   " +gyereknev;
+        public async Task<IActionResult> OnPostMatekAsync()
+        {// put the object into cache
+             _cache.Set<Feladatsor>(fsor.id, fsor);
+            return RedirectToPage("./Matek",new {id=fsor.id });
         }
 
-        public void OnPostMatekSetupParam(string email)
-        {
-            var email2 = Request.Form["email"];
-            PageMessage = "MateK Setup : "+email + "  /   " +email2;
-        }
 
 
     }

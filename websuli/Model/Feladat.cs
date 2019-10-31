@@ -1,13 +1,13 @@
 ﻿using Newtonsoft.Json;
 using System;
-using System.Collections.Concurrent;
-using System.Collections.Generic;
-using System.Text;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace websuli.Model
 {
     public abstract class Feladat
     {
+        [ForeignKey("Feladatsor")]
+        public Guid FealadatsorID { get; set; }
         public string Helyesvalasz { get; set; }
         public string Gyerekvalasz { get; set; }
         public int eredmeny { get; set; }

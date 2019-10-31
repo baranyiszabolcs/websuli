@@ -42,8 +42,8 @@ namespace websuli.Pages
 
         public async Task<IActionResult> OnPostMatekAsync()
         {// put the object into cache
-             _cache.Set<Feladatsor>(fsor.id, fsor);
-            return RedirectToPage("./Matek",new {id=fsor.id });
+             _cache.Set<Feladatsor>(fsor.FeladatsorID, fsor);
+            return RedirectToPage("./Matek",new {id=fsor.FeladatsorID });
         }
 
 

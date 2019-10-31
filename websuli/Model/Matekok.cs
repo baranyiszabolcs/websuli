@@ -1,6 +1,7 @@
 ﻿using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -19,8 +20,9 @@ namespace websuli.Model
     }
     public class Szorzotabla : MatekFeladat
     {
-        
+        [NotMappedAttribute]
         public int Szorzando { get; set; }
+        [NotMappedAttribute]
         public int Szorzo { get; set; }
         public override string Generate()
         {
@@ -37,8 +39,8 @@ namespace websuli.Model
     public class OsszeadKivon : MatekFeladat
     {
         StringBuilder sb = new StringBuilder(" ");
-        public int A { get; set; }
-        public int B { get; set; }
+        public int A;
+        public int B;
         [JsonIgnore]
         public int limit = 100;
         public override string Generate()

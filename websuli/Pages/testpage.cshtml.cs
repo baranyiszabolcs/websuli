@@ -73,7 +73,7 @@ namespace websuli.Pages
         public void OnPostBaction()
         {
             
-            string fsorid = fsor.id.ToString();
+            string fsorid = fsor.FeladatsorID.ToString();
 
             var origentry = _cache.Get<Feladatsor>("0");
             var cacheEntry = fsor;

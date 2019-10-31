@@ -3,7 +3,7 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
-
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace websuli.Model
 {
@@ -19,20 +19,26 @@ namespace websuli.Model
     }
     public class Feladatsor
     {
-        public Guid id { get; set; } = Guid.NewGuid();
+        [Required]
+        [Key]
+        public Guid FeladatsorID { get; set; } = Guid.NewGuid();  // Calssname  ID  naming convention also makes it key during   generation
         [Display(Name = "Feladatsornev", Prompt = "Feladatsor Neve:")]
         public string sornev { get; set; }
-        [Display(Name = "Gyerek Neve",Prompt = "Maya")]
+        [Display(Name = "Gyerek Neve",Prompt = "Gyerek")]
+        [StringLength(50, ErrorMessage = "Max 50 character")]
         public string gyerek { get; set; }
         [Display(Name = "Fealadat típus", Prompt = "Feladat típus:")]
         public string feladatTipus { get; set; } = "Szorzas";
+        [Range(0, 5)]
         public int eredmenypct { get; set; } = 0;
         public int feladatszam { get; set; } = 100;
         public int helyescnt { get; set; } = 0;
         public int hibascnt { get; set; } = 0;
         [Display(Name = "kiadasDatum")]
         [DataType(DataType.Date)]
+        [DisplayFormat(DataFormatString = "{0:yyyy-MM-dd}", ApplyFormatInEditMode = true)]
         public DateTime kiadasDatum { get; set; } = DateTime.Now;
+        [NotMapped]
         public Dictionary<int,Feladat> feladatlista { get; set; } = new Dictionary<int,Feladat>();
         public int cnt { get; set; } = 0;
 

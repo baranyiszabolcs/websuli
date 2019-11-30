@@ -5,24 +5,25 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.EntityFrameworkCore;
-using RazorPagesMovie.Models;
+using websuli.Model;
+using websuli.Models;
 
-namespace RazorPagesMovie.Pages.Movies
+namespace websuli
 {
     public class IndexModel : PageModel
     {
-        private readonly RazorPagesMovie.Models.RazorPagesMovieContext _context;
+        private readonly websuli.Models.websuliContext _context;
 
-        public IndexModel(RazorPagesMovie.Models.RazorPagesMovieContext context)
+        public IndexModel(websuli.Models.websuliContext context)
         {
             _context = context;
         }
 
-        public IList<Movie> Movie { get;set; }
+        public IList<Feladatsor> Feladatsor { get;set; }
 
         public async Task OnGetAsync()
         {
-            Movie = await _context.Movie.ToListAsync();
+            Feladatsor = await _context.Feladatsor.ToListAsync();
         }
     }
 }

@@ -69,7 +69,9 @@ namespace websuli.Model
         }
         public void AddFeladatToList(Feladat fa)
         {
+            fa.Feladatsor = this;
             feladatlista.Add(++cnt, fa);
+            
         }
         public void UpdateFeladat(Feladat fa)
         {

@@ -8,6 +8,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.Extensions.Caching.Memory;
 using websuli.Model;
+using websuli.Models;
 
 namespace websuli.Pages
 {
@@ -30,9 +31,13 @@ namespace websuli.Pages
 
 
         private readonly IMemoryCache _cache;
-        public MatekModel(IMemoryCache cache)
+        private readonly websuli.Models.websuliContext _context;
+
+
+        public MatekModel(IMemoryCache cache, websuli.Models.websuliContext context)
         {
             _cache = cache;
+            _context = context;
         }
         public IActionResult OnGet(Guid id)
         {
@@ -53,7 +58,8 @@ namespace websuli.Pages
             }
 
             feladvany = Feladatsor.GenerateFeladat(fsor.feladatTipus);
-            feladvany.FealadatsorID = fsor.FeladatsorID;
+            //feladvany.FealadatsorID = fsor.FeladatsorID;
+            feladvany.Feladatsor = fsor;
             feladvanyTxt = feladvany.Generate();
             fsor.AddFeladatToList(feladvany);
             startTime = DateTime.Now;
@@ -84,10 +90,12 @@ namespace websuli.Pages
             if (hatravan == 0)
             {
                 fsor.cnt = fsor.cnt - 1;
+                saveFeladatsor();
                 return RedirectToPage("./FeladatLista", new { feladatsorid = lguid });
             }
             feladvany = Feladatsor.GenerateFeladat(fsor.feladatTipus);
-            feladvany.FealadatsorID = fsor.FeladatsorID;
+            //feladvany.FealadatsorID = fsor.FeladatsorID;
+            feladvany.Feladatsor = fsor;
             feladvanyTxt = feladvany.Generate();
             valasz = "";
    
@@ -98,6 +106,27 @@ namespace websuli.Pages
    
            
             return Page();
+        }
+
+        private void saveFeladatsor()
+        {
+            _context.Feladatsor.Add(fsor);
+            foreach (Feladat fa in fsor.feladatlista.Values)
+            {
+                Feladat simplefa = new Feladat()
+                {
+                    eredmeny = fa.eredmeny,
+                    Helyesvalasz = fa.Helyesvalasz,
+                    Gyerekvalasz = fa.Gyerekvalasz,
+                    ValaszidoSec = fa.ValaszidoSec,
+                    feladatJson = fa.feladatJson,
+                    feladatText = fa.feladatText,
+                    Feladatsor = fsor
+                };
+                _context.Feladat.Add(simplefa);
+            }
+            _context.SaveChanges();
+
         }
     }
 }

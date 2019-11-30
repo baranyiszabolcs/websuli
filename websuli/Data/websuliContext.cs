@@ -9,6 +9,10 @@ namespace websuli.Models
 {
     public class websuliContext : DbContext
     {
+        public websuliContext()
+        {
+        }
+
         public websuliContext (DbContextOptions<websuliContext> options)
             : base(options)
         {

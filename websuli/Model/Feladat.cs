@@ -8,9 +8,13 @@ namespace websuli.Model
 {
     public class Feladat
     {
+        [Key]
+        [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public long ID { get; set; }
-        [ForeignKey("Feladatsor")]
-        public Guid FealadatsorID { get; set; }
+        //[ForeignKey("FeladatsorID")]
+        //public Guid FealadatsorID { get; set; }
+        [JsonIgnore]
+        public Feladatsor Feladatsor { get; set; }
         public string Helyesvalasz { get; set; }
         public string Gyerekvalasz { get; set; }
         public int eredmeny { get; set; }
@@ -36,14 +40,14 @@ namespace websuli.Model
         {
             Gyerekvalasz = valasz;
             eredmeny = (valasz==Helyesvalasz ? 1 : 0);
+            GenerateFeladatJson();
             return valasz == Helyesvalasz ? "OK" : "Hibás";
         }
  
         // A feladat főbb elemeit Json objektumba teszi  pl szorzásnál a tényezőket
-        public string GenerateFeladatJson()
+        public void GenerateFeladatJson()
         {
-            feladatJson = JsonConvert.SerializeObject(this);
-            return feladatJson;
+            feladatJson = JsonConvert.SerializeObject(this);          
         }
         
 

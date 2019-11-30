@@ -1,8 +1,9 @@
 ﻿@page
-@model RazorPagesMovie.Pages.Movies.IndexModel
+@model websuli.IndexModel
 
 @{
     ViewData["Title"] = "Index";
+    Layout = "~/Pages/Shared/_Layout.cshtml";
 }
 
 <h1>Index</h1>
@@ -10,50 +11,75 @@
 <p>
     <a asp-page="Create">Create New</a>
 </p>
-
 <table class="table">
     <thead>
         <tr>
             <th>
-                @Html.DisplayNameFor(model => model.Movie[0].Title)
+                @Html.DisplayNameFor(model => model.Feladatsor[0].sornev)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.Movie[0].ReleaseDate)
+                @Html.DisplayNameFor(model => model.Feladatsor[0].gyerek)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.Movie[0].Genre)
+                @Html.DisplayNameFor(model => model.Feladatsor[0].feladatTipus)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.Movie[0].Price)
+                @Html.DisplayNameFor(model => model.Feladatsor[0].eredmenypct)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Feladatsor[0].feladatszam)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Feladatsor[0].helyescnt)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Feladatsor[0].hibascnt)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Feladatsor[0].kiadasDatum)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Feladatsor[0].cnt)
             </th>
             <th></th>
         </tr>
     </thead>
     <tbody>
-        @foreach (var item in Model.Movie)
-        {
-            <tr>
-                <td>
-                    @Html.DisplayFor(modelItem => item.Title)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.ReleaseDate)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.Genre)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.Price)
-                </td>
-                <td>
-                    @item.ID
-                </td>
-                <td>
-                    <a asp-page="./Edit" asp-route-id="@item.ID">Edit</a> |
-                    <a asp-page="./Details" asp-route-id="@item.ID">Details</a> |
-                    <a asp-page="./Delete" asp-route-id="@item.ID">Delete</a>
-                </td>
-            </tr>
-        }
+@foreach (var item in Model.Feladatsor) {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.sornev)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.gyerek)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.feladatTipus)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.eredmenypct)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.feladatszam)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.helyescnt)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.hibascnt)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.kiadasDatum)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.cnt)
+            </td>
+            <td>
+                <a asp-page="./Edit" asp-route-id="@item.FeladatsorID">Edit</a> |
+                <a asp-page="./Details" asp-route-id="@item.FeladatsorID">Details</a> |
+                <a asp-page="./Delete" asp-route-id="@item.FeladatsorID">Delete</a>
+            </td>
+        </tr>
+}
     </tbody>
 </table>

@@ -9,6 +9,8 @@ using Microsoft.AspNetCore.HttpsPolicy;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.EntityFrameworkCore;
+using websuli.Models;
 
 namespace websuli
 {
@@ -36,7 +38,13 @@ namespace websuli
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_2);
             services.AddMemoryCache();
             services.AddSession(options => { options.IdleTimeout = TimeSpan.FromMinutes(10);});
-      
+
+            services.AddDbContext<websuliContext>(options =>
+                    options.UseSqlServer(Configuration.GetConnectionString("websuliContext")));
+
+    
+
+
 
         }
 
@@ -58,8 +66,6 @@ namespace websuli
             app.UseStaticFiles();
             app.UseCookiePolicy();
             app.UseSession();
-            
-
             app.UseMvc();
         }
     }

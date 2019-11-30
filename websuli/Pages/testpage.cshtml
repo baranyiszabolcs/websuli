@@ -18,7 +18,9 @@
     szam bevitel: <input asp-for="sorszam" />
     <button type="submit">Submit</button>
     <input type="text" name="email" />
-    <button type=submit asp-page-handler="MatekSetupParam">MatekParam</button>
+    <button type=submit asp-page-handler="MatekSetupParam">MatekSetupParam</button>
+    <button type=submit asp-page-handler="MatekAction" asp-route-pstr="paramMail">MatekSetupParam atadott parmeter</button>
+    <button type=submit asp-page-handler="MatekAction">MatekParam</button>
 
 </form>
 <br />

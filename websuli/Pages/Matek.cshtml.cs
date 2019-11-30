@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Reflection.Metadata;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
@@ -15,8 +16,7 @@ namespace websuli.Pages
 
         [BindProperty]
         public string valasz { get; set; }
-        [BindProperty]
-        public Guid Id { get; set; }
+        public Guid FeladatsorId { get; set; }
         [BindProperty]
         public string feladvanyTxt { get; set; }
         [BindProperty]
@@ -36,16 +36,24 @@ namespace websuli.Pages
         }
         public IActionResult OnGet(Guid id)
         {
-            
+            HttpContext.Session.SetString("feladvanyTxt", "");
+            FeladatsorId = id;
             if (id == Guid.Empty)
-            { Id = Guid.NewGuid();
+            {
+                FeladatsorId = Guid.NewGuid();
                 fsor = new Feladatsor();
-                _cache.Set<Feladatsor>(Id, fsor);
+                fsor.feladatTipus = HttpContext.Session.GetString("FeladatTipus");
+                _cache.Set<Feladatsor>(FeladatsorId, fsor);
+                HttpContext.Session.SetString("Id", FeladatsorId.ToString());
             }
             else
-                fsor = _cache.Get<Feladatsor>(id);
+            {
+                fsor = _cache.Get<Feladatsor>(FeladatsorId);
+                HttpContext.Session.SetString("Id", FeladatsorId.ToString());
+            }
 
             feladvany = Feladatsor.GenerateFeladat(fsor.feladatTipus);
+            feladvany.FealadatsorID = fsor.FeladatsorID;
             feladvanyTxt = feladvany.Generate();
             fsor.AddFeladatToList(feladvany);
             startTime = DateTime.Now;
@@ -57,23 +65,38 @@ namespace websuli.Pages
 
         public IActionResult OnPostMatekFeladat()
         {
-            
-            fsor = _cache.Get<Feladatsor>(Id);
+
+            string lguid = HttpContext.Session.GetString("Id");
+            if (lguid != null)
+                FeladatsorId = Guid.Parse(lguid);
+
+            fsor = _cache.Get<Feladatsor>(FeladatsorId);
             feladvany = fsor.feladatlista[fsor.cnt];
+            if (valasz == null)
+                valasz = "0";
+
+            valasz = valasz.ToUpper().Trim();
             eredmenyTxt = feladvany.Evaluate(valasz);
+            feladvanyTxt = feladvany.feladatText;   /// ez van sessionben is
             feladvany.ValaszidoSec = (int)DateTime.Now.Subtract(startTime).TotalSeconds;
             fsor.UpdateFeladat( feladvany);
-            if (eredmenyTxt=="OK")
-            {
-                // ez csak ha vegyes feladatok vannak
-                //feladvany = Feladatsor.GenerateFeladat(fsor.feladatTipus);
-                feladvanyTxt = feladvany.Generate();
-            }
-            fsor.AddFeladatToList(feladvany);
-            startTime = DateTime.Now;
-
             hatravan = fsor.feladatszam - fsor.cnt;
+            if (hatravan == 0)
+            {
+                fsor.cnt = fsor.cnt - 1;
+                return RedirectToPage("./FeladatLista", new { feladatsorid = lguid });
+            }
+            feladvany = Feladatsor.GenerateFeladat(fsor.feladatTipus);
+            feladvany.FealadatsorID = fsor.FeladatsorID;
+            feladvanyTxt = feladvany.Generate();
+            valasz = "";
+   
+            feladvany.Gyerekvalasz = "";
+            fsor.AddFeladatToList(feladvany);
+            startTime = DateTime.Now;  
             ModelState.Clear();
+   
+           
             return Page();
         }
     }

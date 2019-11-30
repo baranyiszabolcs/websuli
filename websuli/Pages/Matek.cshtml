@@ -6,23 +6,50 @@
     ViewData["Title"] = "Matek";
     Layout = "~/Pages/Shared/_Layout.cshtml";
 }
+<div class="row">
+    <div class="col-sm-3"></div>
+    <div class="col-sm-6">
+        <div class="panel-group">
+            <div class="panel panel-primary">
+                <div class="panel-heading">
+                    <p align="left">@HttpContext.Session.GetString("FeladatTipus") gyakorlása</p>
 
-<h1>Matek</h1>
-<h3>  @HttpContext.Session.GetString("FeladatTipus") gyakorlása </h3>
-<h3>
-    Hátralévő feladatszám: @Model.hatravan;
-</h3>
-<h3>  feladatszám: @Model.fsor.cnt </h3>
+                    <p align="left">  Hátralévő feladatszám: @Model.hatravan;</p>
 
-<form method="POST" asp-page-handler="MatekFeladat">
-    <input type="hidden" asp-for="Id" />
-    <input type="hidden" asp-for="startTime" />
-    <input type="hidden" asp-for="feladvanyTxt" />
-    Feladat:   @Model.feladvanyTxt
-    <input asp-for="valasz" class="form-control-lg" width="30" />
-    <button type="submit"> Mehet</button>
-    <br />
-    Eredmény: @Model.eredmenyTxt
-    <br />
-    Idő :@Model.feladvany.ValaszidoSec
-</form>
+
+                </div>
+                <div class="panel-body">
+                    <form method="POST" autocomplete="off">
+                        @*<input type="hidden" asp-for="Id" />
+                            <input type="hidden" asp-for="feladvanyTxt" />
+                                  inkább session be teszem bele
+                        *@
+                        <h4>  feladatszám: @Model.fsor.cnt </h4>
+                        <input type="hidden" name="startTime" value="@DateTime.Now" />
+                        <h2>Feladat:   @Model.feladvanyTxt </h2>
+                        <input asp-for="valasz" class="form-control-lg" width="5" />
+                        
+                        <button type="submit" asp-page-handler="MatekFeladat" class="btn-primary"> Mehet</button>
+                        <br />
+                        <h3> Eredmény: @Model.eredmenyTxt </h3>
+                        <br />
+                        Idő :@Model.feladvany.ValaszidoSec
+                        @*        <a asp-page="./FeladatLista" asp-route-feladatsorid="@Model.FeladatsorId">Kiértékelés</a>*@
+                    </form>
+                </div>
+                <div class="panel-footer">
+                    <h4>  Helyes: @Model.fsor.helyescnt </h4>
+                    <h4 class="alert-danger">  Hibás: @Model.fsor.hibascnt </h4>
+                </div>
+            </div>
+        </div>
+
+    </div>
+    <div class="col-sm-3"></div>
+</div>
+
+
+
+
+
+

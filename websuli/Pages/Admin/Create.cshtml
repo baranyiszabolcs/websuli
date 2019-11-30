@@ -1,0 +1,75 @@
+﻿@page
+@model websuli.CreateModel
+
+@{
+    ViewData["Title"] = "Create";
+    Layout = "~/Pages/Shared/_Layout.cshtml";
+}
+
+<h1>Create</h1>
+
+<h4>Feladatsor</h4>
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form method="post">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <div class="form-group">
+                <label asp-for="Feladatsor.sornev" class="control-label"></label>
+                <input asp-for="Feladatsor.sornev" class="form-control" />
+                <span asp-validation-for="Feladatsor.sornev" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Feladatsor.gyerek" class="control-label"></label>
+                <input asp-for="Feladatsor.gyerek" class="form-control" />
+                <span asp-validation-for="Feladatsor.gyerek" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Feladatsor.feladatTipus" class="control-label"></label>
+                <input asp-for="Feladatsor.feladatTipus" class="form-control" />
+                <span asp-validation-for="Feladatsor.feladatTipus" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Feladatsor.eredmenypct" class="control-label"></label>
+                <input asp-for="Feladatsor.eredmenypct" class="form-control" />
+                <span asp-validation-for="Feladatsor.eredmenypct" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Feladatsor.feladatszam" class="control-label"></label>
+                <input asp-for="Feladatsor.feladatszam" class="form-control" />
+                <span asp-validation-for="Feladatsor.feladatszam" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Feladatsor.helyescnt" class="control-label"></label>
+                <input asp-for="Feladatsor.helyescnt" class="form-control" />
+                <span asp-validation-for="Feladatsor.helyescnt" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Feladatsor.hibascnt" class="control-label"></label>
+                <input asp-for="Feladatsor.hibascnt" class="form-control" />
+                <span asp-validation-for="Feladatsor.hibascnt" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Feladatsor.kiadasDatum" class="control-label"></label>
+                <input asp-for="Feladatsor.kiadasDatum" class="form-control" />
+                <span asp-validation-for="Feladatsor.kiadasDatum" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Feladatsor.cnt" class="control-label"></label>
+                <input asp-for="Feladatsor.cnt" class="form-control" />
+                <span asp-validation-for="Feladatsor.cnt" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <input type="submit" value="Create" class="btn btn-primary" />
+            </div>
+        </form>
+    </div>
+</div>
+
+<div>
+    <a asp-page="Index">Back to List</a>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}

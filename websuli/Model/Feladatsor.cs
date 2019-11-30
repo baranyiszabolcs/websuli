@@ -13,8 +13,10 @@ namespace websuli.Model
         {
             new SelectListItem { Value = "Osszeadas", Text = "Összeadás" },
             new SelectListItem { Value = "Szorzas", Text = "Szorzás" },
-            new SelectListItem { Value = "Szorzas/Osztas", Text = "Szorzás / Osztás"  },
-            new SelectListItem { Value = "Zarojeles", Text = "Zárójeles kifejezéek"  },
+            new SelectListItem { Value = "Osztas", Text = "Osztás"  },
+            new SelectListItem { Value = "Zarojeles", Text = "Zárójeles kifejezések"  },
+            new SelectListItem { Value = "Kerekites", Text = "Számkerekítések"  },
+            new SelectListItem { Value = "Romai", Text = "Római Számok"  }
         };
     }
     public class Feladatsor
@@ -29,7 +31,7 @@ namespace websuli.Model
         public string gyerek { get; set; }
         [Display(Name = "Fealadat típus", Prompt = "Feladat típus:")]
         public string feladatTipus { get; set; } = "Szorzas";
-        [Range(0, 5)]
+        [Range(0, 100)]
         public int eredmenypct { get; set; } = 0;
         public int feladatszam { get; set; } = 100;
         public int helyescnt { get; set; } = 0;
@@ -42,19 +44,23 @@ namespace websuli.Model
         public Dictionary<int,Feladat> feladatlista { get; set; } = new Dictionary<int,Feladat>();
         public int cnt { get; set; } = 0;
 
-        public static Feladat GenerateFeladat(string tipus, int plimit=100)
+        public static Feladat GenerateFeladat(string tipus)
         {
             switch (tipus)
             { 
                case "Szorzas": 
                     return new Szorzotabla();
                case "Osszeadas":
-                    OsszeadKivon f = new OsszeadKivon() { limit=plimit};
+                    OsszeadKivon f = new OsszeadKivon() { limit=1000};
                     return f;
-               case "Szorzas/Osztas":
-                    return new Szorzotabla();
+               case "Osztas":
+                    return new Osztas();
                case "Zarojeles":
-                    return new Szorzotabla();
+                    return new Zarojeles();
+               case "Kerekites":
+                    return new Kerekites() { limit =1000};
+               case "Romai":
+                    return new RomaiSzamok() { limit = 1000 };
 
                 default:
                     return new Szorzotabla();
@@ -72,7 +78,7 @@ namespace websuli.Model
                 ++helyescnt;
             else
                 ++hibascnt;
-            eredmenypct = helyescnt / feladatszam;
+            eredmenypct = (int)Math.Round((((float)helyescnt / (float)feladatszam)) * 100.0);
             
         }
     }

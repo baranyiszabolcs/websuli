@@ -1,0 +1,113 @@
+﻿@page "{FeladatsorId}"
+@model websuli.Pages.FeladatListaModel
+@{
+    ViewData["Title"] = "FeladatLista";
+    Layout = "~/Pages/Shared/_Layout.cshtml";
+}
+
+<h1>Eredményhirdetés </h1>
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.fsor.feladatlista[0].feladatText)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.fsor.feladatlista[0].Gyerekvalasz)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.fsor.feladatlista[0].Helyesvalasz)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.fsor.feladatlista[0].ValaszidoSec)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.fsor.feladatlista[0].eredmeny)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var feladat in Model.fsor.feladatlista.Values)
+        {
+            <tr>
+                .
+                <td>
+                    @Html.DisplayFor(modelItem => feladat.feladatText)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => feladat.Gyerekvalasz)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => feladat.Helyesvalasz)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => feladat.ValaszidoSec)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => feladat.eredmenyTxt)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => feladat.feladatJson)
+                </td>
+                @*<td>
+                    <a asp-page="./Edit" asp-route-id="@item.ID">Edit</a> |
+                    <a asp-page="./Details" asp-route-id="@item.ID">Details</a> |
+                    <a asp-page="./Delete" asp-route-id="@item.ID">Delete</a>
+                </td>*@
+            </tr>
+        }
+        <tr>
+
+            <td>
+                Összesen
+            </td>
+            <td>
+                Heles válasz
+            </td>
+            <td>
+                Hibás válasz
+            </td>
+            <td>
+               Eredmény %
+            </td>
+            <td>
+
+            </td>
+            <td>
+ 
+            </td>
+            @*<td>
+                <a asp-page="./Edit" asp-route-id="@item.ID">Edit</a> |
+                <a asp-page="./Details" asp-route-id="@item.ID">Details</a> |
+                <a asp-page="./Delete" asp-route-id="@item.ID">Delete</a>
+            </td>*@
+        </tr>
+        <tr>
+
+            <td>
+                @Model.fsor.cnt
+            </td>
+            <td>
+                @Model.fsor.helyescnt
+            </td>
+            <td>
+                @Model.fsor.hibascnt
+            </td>
+            <td>
+                @Model.fsor.eredmenypct
+            </td>
+            <td>
+
+            <td>
+       
+            </td>
+            @*<td>
+                <a asp-page="./Edit" asp-route-id="@item.ID">Edit</a> |
+                <a asp-page="./Details" asp-route-id="@item.ID">Details</a> |
+                <a asp-page="./Delete" asp-route-id="@item.ID">Delete</a>
+            </td>*@
+        </tr>
+    </tbody>
+</table>
+@RouteData.Values["FeladatsorId"]

@@ -37,12 +37,13 @@ namespace websuli.Pages
 
         public void OnPost()
         {        
-            HttpContext.Session.SetString("FeladatTipus", "szorszas");       
+            HttpContext.Session.SetString("FeladatTipus", fsor.feladatTipus);       
         }
 
         public async Task<IActionResult> OnPostMatekAsync()
         {// put the object into cache
              _cache.Set<Feladatsor>(fsor.FeladatsorID, fsor);
+            HttpContext.Session.SetString("FeladatTipus", fsor.feladatTipus);
             return RedirectToPage("./Matek",new {id=fsor.FeladatsorID });
         }
 

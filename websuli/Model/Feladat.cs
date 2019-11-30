@@ -1,11 +1,14 @@
 ﻿using Newtonsoft.Json;
 using System;
+using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
+using System.Numerics;
 
 namespace websuli.Model
 {
-    public abstract class Feladat
+    public class Feladat
     {
+        public long ID { get; set; }
         [ForeignKey("Feladatsor")]
         public Guid FealadatsorID { get; set; }
         public string Helyesvalasz { get; set; }
@@ -13,8 +16,16 @@ namespace websuli.Model
         public int eredmeny { get; set; }
         public int ValaszidoSec { get; set; } = 0;
         public string feladatJson { get; set; }
+        public string feladatText { get; set; }
 
-        public abstract string Generate();
+        public string eredmenyTxt
+        {
+            get { return eredmeny == 1 ? "Jó" : "Rossz"; }
+        }
+        public virtual string Generate()
+        {
+            throw new NotImplementedException();
+        }
         public virtual string[] GeneratePosibleAnswers()
         {
             string[] valaszok = new string[1];

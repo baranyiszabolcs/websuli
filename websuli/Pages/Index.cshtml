@@ -8,20 +8,26 @@
 
     <div class="text-center">
         <h1 class="display-4">Üdvözlöm a Websuliban</h1>
-      
+        <div class="row">
+            <div class="col-sm-2"></div>
+            <div class="col-sm-8">
+                <form method="POST">
+                    <div>
+                        @Html.DisplayNameFor(gm => gm.fsor.gyerek):
+                        <input asp-for="fsor.gyerek"
+                               class="form-control" width="30" type="text" />
+                    </div>
+                    <br />
+                    Feladat típus:
+                    <select asp-for="fsor.feladatTipus" asp-items="FealdatsorLOV.FeladatTipusLista"
+                            class="form-control">  </select>
+                    <input asp-for="fsor.feladatszam" class="form-control" width="5" type="number" />
+                    @*<button type="submit">regisztrál</button>*@
+                    <br />
+                    <button type=submit asp-page-handler="Matek">Matekozzunk!</button>
+                </form>
+            </div>
+            <div class="col-sm-2"></div>
+        </div>
 
-
-        <form method="POST">
-
-            <div> @Html.DisplayNameFor(gm => gm.fsor.gyerek):<input asp-for="fsor.gyerek" class="form-control-lg" width="30" /></div>
-            <select asp-for="fsor.feladatTipus" asp-items="FealdatsorLOV.FeladatTipusLista" >  </select>
-            <input asp-for="fsor.feladatszam" class="form-control-lg" width="30" />          
-            <button type="submit">regisztrál</button>
-            <button type=submit asp-page-handler="Matek">Matekozzunk!</button>
-
-
-        </form>
- 
-
-        
     </div>

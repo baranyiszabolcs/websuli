@@ -39,35 +39,39 @@ namespace websuli.Pages
         public testpageModel(IMemoryCache cache)
         {
             _cache = cache;
+            Feladatsor lfsor;
+            bool vanmarilyen = _cache.TryGetValue("0", out lfsor);
             fsor.kiadasDatum = DateTime.Now;
             // put the object into cache
             _cache.Set<Feladatsor>("0", fsor);
-
-            //mentés sessionbe
-            HttpContext.Session.SetInt32("Feladatszam", 55);
-            HttpContext.Session.SetString("FeladatTipus", "szorzas");
 
         }
         public void OnGet()
         {
             ViewData["Title"] = "Oldalcim";
-    
 
-            feladattipus = HttpContext.Session.GetString("FeladatTipus");
+           feladattipus = HttpContext.Session.GetString("FeladatTipus");
         }
 
         public async void OnPost()
         {
             nonbindignev = bindingnev;
             HttpContext.Session.SetInt32("Feladatszam", sorszam);
+            HttpContext.Session.SetString("FeladatTipus", "szorzas");
             var srsz = Request.Form["sorszam"];  // form input tag neve...
         }
 
-        // Az input   name="email"  értéke bemappelődik
+        // Az input   name="email"  értéke bemappelődik  és ez edősebb mint a route...
         public void OnPostMatekSetupParam(string email)
         {
             var email2 = Request.Form["email"];
             MessageLabel = "MateK Setup : " + email + "  /   " + email2;
+        }
+
+        public void OnPostMatekAction(string pstr)
+        {
+            var lsorszam = Request.Form["sorszam"];
+            MessageLabel = "MateK Setup : {lsorszam}" +   pstr ;
         }
 
         public void OnPostBaction()

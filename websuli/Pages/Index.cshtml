@@ -6,28 +6,43 @@
     ViewData["Title"] = "Home page";
 }
 
-    <div class="text-center">
-        <h1 class="display-4">Üdvözlöm a Websuliban</h1>
-        <div class="row">
-            <div class="col-sm-2"></div>
-            <div class="col-sm-8">
-                <form method="POST">
-                    <div>
+<div class="text-center">
+    <h1 class="display-4">Üdvözlöm a Websuliban</h1>
+    <div class="row">
+        <div class="col-sm-2"></div>
+        <div class="col-sm-8">
+            <form method="POST">
+                <div class="form-group row">
+                    <label for="gyerek" class="col-sm-4 col-form-label">
                         @Html.DisplayNameFor(gm => gm.fsor.gyerek):
+                    </label>
+                    <div class="col-sm-8">
                         <input asp-for="fsor.gyerek"
-                               class="form-control" width="30" type="text" />
+                               class="form-control" width="30" type="text" id="gyerek" />
+                    </div>
                     </div>
                     <br />
-                    Feladat típus:
-                    <select asp-for="fsor.feladatTipus" asp-items="FealdatsorLOV.FeladatTipusLista"
-                            class="form-control">  </select>
-                    <input asp-for="fsor.feladatszam" class="form-control" width="5" type="number" />
-                    @*<button type="submit">regisztrál</button>*@
-                    <br />
-                    <button type=submit asp-page-handler="Matek">Matekozzunk!</button>
-                </form>
-            </div>
-            <div class="col-sm-2"></div>
+                    <div class="form-group row">
+                        <label for="faladatType" class="col-sm-4 col-form-label"> Feladat típus:</label>
+                        <div class="col-sm-8">
+                            <select id="faladatType" asp-for="fsor.feladatTipus" asp-items="FealdatsorLOV.FeladatTipusLista"
+                                    class="form-control">  </select>
+                        </div>
+                    </div>
+            
+                    <div class="form-group row">
+                        <label for="feladatno" class="col-sm-4 col-form-label"> Feladatszám:</label>
+                        <div class="col-sm-8">
+                            <input asp-for="fsor.feladatszam" class="col-sm-8 form-control" width="5"
+                                   type="number" id="feladatno" />
+                            @*<button type="submit">regisztrál</button>*@
+                        </div>
+                        </div>
+                        <br />
+                        <button type=submit asp-page-handler="Matek" class="btn btn-primary">Matekozzunk!</button>
+</form>
         </div>
-
+        <div class="col-sm-2"></div>
     </div>
+
+</div>

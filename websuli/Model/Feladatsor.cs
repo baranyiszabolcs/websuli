@@ -33,7 +33,7 @@ namespace websuli.Model
         public string feladatTipus { get; set; } = "Szorzas";
         [Range(0, 100)]
         public int eredmenypct { get; set; } = 0;
-        public int feladatszam { get; set; } = 100;
+        public int feladatszam { get; set; } = 20;
         public int helyescnt { get; set; } = 0;
         public int hibascnt { get; set; } = 0;
         [Display(Name = "kiadasDatum")]

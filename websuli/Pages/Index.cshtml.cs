@@ -40,7 +40,7 @@ namespace websuli.Pages
             HttpContext.Session.SetString("FeladatTipus", fsor.feladatTipus);       
         }
 
-        public async Task<IActionResult> OnPostMatekAsync()
+        public RedirectToPageResult OnPostMatek()
         {// put the object into cache
             fsor.sornev = fsor.gyerek +"_"+ DateTime.Now.ToString();
              _cache.Set<Feladatsor>(fsor.FeladatsorID, fsor);

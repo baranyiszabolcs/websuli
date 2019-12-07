@@ -43,7 +43,6 @@ namespace websuli.Model
         public int Osztando { get; set; }
         [NotMappedAttribute]
         public int Oszto { get; set; }
-        int szorzat;
         public override string Generate()
         {
             rnd = new Random();
@@ -177,8 +176,6 @@ namespace websuli.Model
         public int limit = 1000;
         [NotMappedAttribute]
         int Arab;
-        string Romai="";
-
 
         public override string Generate()
         {

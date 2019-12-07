@@ -89,7 +89,7 @@ namespace websuli.Pages
             hatravan = fsor.feladatszam - fsor.cnt;
             if (hatravan == 0)
             {
-                fsor.cnt = fsor.cnt - 1;
+                //fsor.cnt = fsor.cnt - 1;
                 saveFeladatsor();
                 return RedirectToPage("./FeladatLista", new { feladatsorid = lguid });
             }

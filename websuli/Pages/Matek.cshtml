@@ -12,28 +12,25 @@
         <div class="panel-group">
             <div class="panel panel-primary">
                 <div class="panel-heading">
-                    <p align="left">@HttpContext.Session.GetString("FeladatTipus") gyakorlása</p>
+                    <h3 class="text-left" >@HttpContext.Session.GetString("FeladatTipus") gyakorlása</h3>
 
-                    <p align="left">  Hátralévő feladatszám: @Model.hatravan;</p>
-
-
-                </div>
+                    <p class="text-left">  Hátralévő feladatszám: @Model.hatravan;</p>
+</div>
                 <div class="panel-body">
                     <form method="POST" autocomplete="off">
-                        @*<input type="hidden" asp-for="Id" />
-                            <input type="hidden" asp-for="feladvanyTxt" />
-                                  inkább session be teszem bele
-                        *@
-                        <h4>  feladatszám: @Model.fsor.cnt </h4>
+  
                         <input type="hidden" name="startTime" value="@DateTime.Now" />
-                        <h2>Feladat:   @Model.feladvanyTxt </h2>
-                        <input asp-for="valasz" class="form-control-lg" width="5" />
-                        
+                        <label for="answerbox">
+                            <h3>Feladat:   @Model.feladvanyTxt </h3>
+                        </label>
+                        <input asp-for="valasz" class="form-control-lg" width="5" id="answerbox" required/>
+                        <script type="text/javascript">document.getElementById('answerbox').focus();</script>
+                        <br />
                         <button type="submit" asp-page-handler="MatekFeladat" class="btn-primary"> Mehet</button>
                         <br />
                         <h3> Eredmény: @Model.eredmenyTxt </h3>
                         <br />
-                        Idő :@Model.feladvany.ValaszidoSec
+                       @* Idő :@Model.feladvany.ValaszidoSec*@
                         @*        <a asp-page="./FeladatLista" asp-route-feladatsorid="@Model.FeladatsorId">Kiértékelés</a>*@
                     </form>
                 </div>

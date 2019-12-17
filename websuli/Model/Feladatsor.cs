@@ -36,6 +36,11 @@ namespace websuli.Model
         public int feladatszam { get; set; } = 20;
         public int helyescnt { get; set; } = 0;
         public int hibascnt { get; set; } = 0;
+        [Display(Name = "IPaddress", Prompt = "IP")]
+        [StringLength(12)]
+        [Column("ipcim")]
+        public string ipcim { get; set; }
+
         [Display(Name = "kiadasDatum")]
         [DataType(DataType.Date)]
         [DisplayFormat(DataFormatString = "{0:yyyy-MM-dd}", ApplyFormatInEditMode = true)]

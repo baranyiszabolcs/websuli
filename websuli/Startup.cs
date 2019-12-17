@@ -41,9 +41,7 @@ namespace websuli
 
             services.AddDbContext<websuliContext>(options =>
                     options.UseSqlServer(Configuration.GetConnectionString("websuliContext")));
-
-    
-
+            services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
 
 
         }

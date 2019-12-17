@@ -14,6 +14,9 @@ namespace websuli.Pages
 {
     public class IndexModel : PageModel
     {
+
+        private IHttpContextAccessor _accessor;
+
         [ViewData]
         public string PageMessage {get;set;}  // can be accessed through view data and as well as Model.
         [BindProperty]
@@ -26,13 +29,16 @@ namespace websuli.Pages
 
 
         private readonly IMemoryCache _cache;
-        public IndexModel(IMemoryCache cache)
+        public IndexModel(IMemoryCache cache, IHttpContextAccessor accessor)
         {
             _cache = cache;
+            _accessor = accessor;
         }
         public void OnGet()
         {
             fsor = new Feladatsor();
+            fsor.ipcim = _accessor.HttpContext.Connection.RemoteIpAddress.ToString();
+
         }
 
         public void OnPost()
@@ -43,7 +49,8 @@ namespace websuli.Pages
         public RedirectToPageResult OnPostMatek()
         {// put the object into cache
             fsor.sornev = fsor.gyerek +"_"+ DateTime.Now.ToString();
-             _cache.Set<Feladatsor>(fsor.FeladatsorID, fsor);
+            fsor.ipcim = _accessor.HttpContext.Connection.RemoteIpAddress.ToString();
+            _cache.Set<Feladatsor>(fsor.FeladatsorID, fsor);
             HttpContext.Session.SetString("FeladatTipus", fsor.feladatTipus);
             return RedirectToPage("./Matek",new {id=fsor.FeladatsorID });
         }

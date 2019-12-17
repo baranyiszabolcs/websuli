@@ -66,19 +66,19 @@ namespace websuli.Model
     
         public override string Generate()
         {
-            rnd = new Random();
+            rnd =  new Random();
             Eredeti = rnd.Next(1000);
-            int kerekitos = rnd.Next(100);
+            int kerekitos =  rnd.Next(100);
             StringBuilder sb = new StringBuilder("  ");
 
             if (kerekitos % 2 ==1)
             {
                 feladatText = sb.AppendFormat(" Kerekítsd százasokra: {0}  : ", Eredeti.ToString()).ToString();
-                Helyesvalasz = (Math.Round((decimal)Eredeti / 100)*100).ToString();
+                Helyesvalasz = (Math.Round((decimal)Eredeti / 100,0)*100).ToString();
             }  else
             {
                 feladatText = sb.AppendFormat(" Kerekítsd tízesekre: {0}  : ", Eredeti.ToString()).ToString();
-                Helyesvalasz = (Math.Round((decimal)Eredeti / 10)*10).ToString();
+                Helyesvalasz = (Math.Round((decimal)Eredeti/10,0)*10).ToString();
             }
 
             return feladatText;

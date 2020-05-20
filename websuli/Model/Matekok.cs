@@ -46,8 +46,28 @@ namespace websuli.Model
         public override string Generate()
         {
             rnd = new Random();
-            Oszto = rnd.Next(9)+1;
-            eredmeny = rnd.Next(10);
+            Oszto = rnd.Next(1,10)+1;
+            eredmeny = rnd.Next(1,10)+1;
+            Osztando = eredmeny * Oszto;
+            Helyesvalasz = eredmeny.ToString();
+            StringBuilder sb = new StringBuilder(" ");
+            feladatText = sb.AppendFormat("{0} : {1} = ", Osztando, Oszto).ToString();
+            return feladatText;
+        }
+
+    }
+
+    public class OsztasPlus : MatekFeladat
+    {
+        [NotMappedAttribute]
+        public int Osztando { get; set; }
+        [NotMappedAttribute]
+        public int Oszto { get; set; }
+        public override string Generate()
+        {
+            rnd = new Random();
+            Oszto = rnd.Next(5, 12) + 1;
+            eredmeny = rnd.Next(5, 12) + 1;
             Osztando = eredmeny * Oszto;
             Helyesvalasz = eredmeny.ToString();
             StringBuilder sb = new StringBuilder(" ");

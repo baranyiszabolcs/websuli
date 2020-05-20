@@ -37,11 +37,12 @@ namespace websuli
 
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_2);
             services.AddMemoryCache();
-            services.AddSession(options => { options.IdleTimeout = TimeSpan.FromMinutes(10);});
+            services.AddSession(options => { options.IdleTimeout = TimeSpan.FromMinutes(30);});
 
             services.AddDbContext<websuliContext>(options =>
                     options.UseSqlServer(Configuration.GetConnectionString("websuliContext")));
             services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
+            services.AddApplicationInsightsTelemetry();
 
 
         }

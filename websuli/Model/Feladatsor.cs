@@ -11,9 +11,11 @@ namespace websuli.Model
     {
         public static List<SelectListItem> FeladatTipusLista { get; } = new List<SelectListItem>()
         {
-            new SelectListItem { Value = "Osszeadas", Text = "Összeadás" },
+            new SelectListItem { Value = "Osszeadas", Text = "Összeadás - Kivonás" },
+            new SelectListItem { Value = "Osszeadas20", Text = "Összeadás - Kivonás 20 ig" },
             new SelectListItem { Value = "Szorzas", Text = "Szorzás" },
             new SelectListItem { Value = "Osztas", Text = "Osztás"  },
+            new SelectListItem { Value = "OsztasPlus", Text = "Osztás nehéz"  },
             new SelectListItem { Value = "Zarojeles", Text = "Zárójeles kifejezések"  },
             new SelectListItem { Value = "Kerekites", Text = "Számkerekítések"  },
             new SelectListItem { Value = "Romai", Text = "Római Számok"  }
@@ -29,7 +31,7 @@ namespace websuli.Model
         [Display(Name = "Gyerek Neve",Prompt = "Gyerek")]
         [StringLength(50, ErrorMessage = "Max 50 character")]
         public string gyerek { get; set; }
-        [Display(Name = "Fealadat típus", Prompt = "Feladat típus:")]
+        [Display(Name = "Feladat típus", Prompt = "Feladat típus:")]
         public string feladatTipus { get; set; } = "Szorzas";
         [Range(0, 100)]
         public int eredmenypct { get; set; } = 0;
@@ -48,6 +50,9 @@ namespace websuli.Model
         [NotMapped]
         public Dictionary<int,Feladat> feladatlista { get; set; } = new Dictionary<int,Feladat>();
         public int cnt { get; set; } = 0;
+        [NotMapped]
+        private bool isPersisted = false;
+        
 
         public static Feladat GenerateFeladat(string tipus)
         {
@@ -58,9 +63,14 @@ namespace websuli.Model
                case "Osszeadas":
                     OsszeadKivon f = new OsszeadKivon() { limit=1000};
                     return f;
-               case "Osztas":
+                case "Osszeadas20":
+                    OsszeadKivon f20 = new OsszeadKivon() { limit = 20 };
+                    return f20;
+                case "Osztas":
                     return new Osztas();
-               case "Zarojeles":
+                case "OsztasPlus":
+                    return new OsztasPlus();
+                case "Zarojeles":
                     return new Zarojeles();
                case "Kerekites":
                     return new Kerekites() { limit =1000};
@@ -88,6 +98,41 @@ namespace websuli.Model
             eredmenypct = (int)Math.Round((((float)helyescnt / (float)feladatszam)) * 100.0);
             
         }
+
+        public void UpdateFeladat(Feladat fa, websuli.Models.websuliContext context)
+        {
+            this.UpdateFeladat(fa);
+            try
+            {
+                if (!isPersisted)
+                {
+                    context.Feladatsor.Add(this);
+                    isPersisted = true;
+                }
+                else
+                    context.Feladatsor.Update(this);
+                //  nem baszakodok az örökléssel  EF core  ban minden leszármazott entity-t fel kéne venni
+                Feladat simplefa = new Feladat
+                {
+                    eredmeny = fa.eredmeny,
+                    Helyesvalasz = fa.Helyesvalasz,
+                    Gyerekvalasz = fa.Gyerekvalasz,
+                    ValaszidoSec = fa.ValaszidoSec,
+                    feladatJson = fa.feladatJson,
+                    feladatText = fa.feladatText,
+                    Feladatsor = this
+                };
+
+                context.Feladat.Add(simplefa);
+                context.SaveChanges();
+            } catch (Exception ex)
+            {
+
+            }
+
+
+        }
+
     }
 
 

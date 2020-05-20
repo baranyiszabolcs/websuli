@@ -48,6 +48,7 @@ namespace websuli.Pages
                 FeladatsorId = Guid.NewGuid();
                 fsor = new Feladatsor();
                 fsor.feladatTipus = HttpContext.Session.GetString("FeladatTipus");
+                fsor.FeladatsorID = FeladatsorId;
                 _cache.Set<Feladatsor>(FeladatsorId, fsor);
                 HttpContext.Session.SetString("Id", FeladatsorId.ToString());
             }
@@ -85,12 +86,12 @@ namespace websuli.Pages
             eredmenyTxt = feladvany.Evaluate(valasz);
             feladvanyTxt = feladvany.feladatText;   /// ez van sessionben is
             feladvany.ValaszidoSec = (int)DateTime.Now.Subtract(startTime).TotalSeconds;
-            fsor.UpdateFeladat( feladvany);
+            fsor.UpdateFeladat( feladvany,_context);
             hatravan = fsor.feladatszam - fsor.cnt;
             if (hatravan == 0)
             {
                 //fsor.cnt = fsor.cnt - 1;
-                saveFeladatsor();
+                //saveFeladatsor();
                 return RedirectToPage("./FeladatLista", new { feladatsorid = lguid });
             }
             feladvany = Feladatsor.GenerateFeladat(fsor.feladatTipus);
@@ -106,27 +107,6 @@ namespace websuli.Pages
    
            
             return Page();
-        }
-
-        private void saveFeladatsor()
-        {
-            _context.Feladatsor.Add(fsor);
-            foreach (Feladat fa in fsor.feladatlista.Values)
-            {
-                Feladat simplefa = new Feladat()
-                {
-                    eredmeny = fa.eredmeny,
-                    Helyesvalasz = fa.Helyesvalasz,
-                    Gyerekvalasz = fa.Gyerekvalasz,
-                    ValaszidoSec = fa.ValaszidoSec,
-                    feladatJson = fa.feladatJson,
-                    feladatText = fa.feladatText,
-                    Feladatsor = fsor
-                };
-                _context.Feladat.Add(simplefa);
-            }
-            _context.SaveChanges();
-
         }
     }
 }

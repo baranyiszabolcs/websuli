@@ -15,11 +15,15 @@ namespace websuli.Model
         //public Guid FealadatsorID { get; set; }
         [JsonIgnore]
         public Feladatsor Feladatsor { get; set; }
+        [Display(Name = "Helyes válasz")]
         public string Helyesvalasz { get; set; }
+        [Display(Name = "Gyerek válasz")]
         public string Gyerekvalasz { get; set; }
         public int eredmeny { get; set; }
+        [Display(Name = "Válaszidő")]
         public int ValaszidoSec { get; set; } = 0;
         public string feladatJson { get; set; }
+        [Display(Name = "Feladat")]
         public string feladatText { get; set; }
 
         public string eredmenyTxt

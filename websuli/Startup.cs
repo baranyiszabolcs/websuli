@@ -43,6 +43,7 @@ namespace websuli
                     options.UseSqlServer(Configuration.GetConnectionString("websuliContext")));
             services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
             services.AddApplicationInsightsTelemetry();
+            services.AddMvc(options => options.EnableEndpointRouting = false);
 
 
         }

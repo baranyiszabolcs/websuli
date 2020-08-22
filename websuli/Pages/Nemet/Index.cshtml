@@ -1,0 +1,66 @@
+﻿@page
+@model websuli.Pages.Nemet.IndexModel
+
+@{
+    ViewData["Title"] = "Index";
+    Layout = "~/Pages/Shared/_Layout.cshtml";
+}
+    <style>
+        btn:link, btn:visited {
+            background-color: #f44336;
+            color: blue;
+            padding: 14px 25px;
+            text-align: center;
+            text-decoration: none;
+            display: inline-block;
+        }
+
+        btn:hover, btn:active {
+            background-color: red;
+        }
+    </style>
+<h1>Index</h1>
+
+<p>
+    <a class="btn" asp-page="Create">Új Szó</a>
+</p>
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.NemetSzo[0].Nevelo)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.NemetSzo[0].Nemet)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.NemetSzo[0].Magyar)
+            </th>
+            @*<th>
+            @Html.DisplayNameFor(model => model.NemetSzo[0].Beiras)
+        </th>*@
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model.NemetSzo) {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.Nevelo)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Nemet)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Magyar)
+            </td>
+
+            <td>
+                <a asp-page="./Edit" asp-route-id="@item.ID">Edit</a> |
+                @*<a asp-page="./Details" asp-route-id="@item.Nemet">Details</a> |*@
+                <a asp-page="./Delete" asp-route-id="@item.ID">Delete</a>
+            </td>
+        </tr>
+}
+    </tbody>
+</table>

@@ -6,50 +6,30 @@ using System.Numerics;
 
 namespace websuli.Model
 {
+    [Table("nemetszavak")]
     public class NemetSzo
     {
         [Key]
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public long ID { get; set; }
-        //[ForeignKey("FeladatsorID")]
-        //public Guid FealadatsorID { get; set; }
-        [JsonIgnore]
-        public Feladatsor Feladatsor { get; set; }
-        public string Helyesvalasz { get; set; }
-        public string Gyerekvalasz { get; set; }
-        public int eredmeny { get; set; }
-        public int ValaszidoSec { get; set; } = 0;
-        public string feladatJson { get; set; }
-        public string feladatText { get; set; }
+        [Display(Name = "Névelő", Prompt = "Névelő")]
+        [StringLength(5)]
+        [Column("nevelo")]
+        public string Nevelo { get; set; }
+        [Required]
+        [Display(Name = "Németül", Prompt = "Németül")]
+        [StringLength(200)]
+        [Column("nemet")]
+        public string Nemet { get; set; }
+        [Required]
+        [Display(Name = "Magyarul", Prompt = "Magyarul")]
+        [StringLength(200)]
+        [Column("magyar")]
+        public string Magyar { get; set; }
 
-        public string eredmenyTxt
-        {
-            get { return eredmeny == 1 ? "Jó" : "Rossz"; }
-        }
-        public virtual string Generate()
-        {
-            throw new NotImplementedException();
-        }
-        public virtual string[] GeneratePosibleAnswers()
-        {
-            string[] valaszok = new string[1];
-            valaszok[0] = "HEHEHE";
-            return valaszok;
-        }
-        public virtual string Evaluate(string valasz)
-        {
-            Gyerekvalasz = valasz;
-            eredmeny = (valasz==Helyesvalasz ? 1 : 0);
-            GenerateFeladatJson();
-            return valasz == Helyesvalasz ? "OK" : "Hibás";
-        }
- 
-        // A feladat főbb elemeit Json objektumba teszi  pl szorzásnál a tényezőket
-        public void GenerateFeladatJson()
-        {
-            feladatJson = JsonConvert.SerializeObject(this);          
-        }
-        
+        [DisplayFormat(DataFormatString = "{0:yyyy-MM-dd}", ApplyFormatInEditMode = true)]
+        [Column("feladva")]
+        public DateTime Feladva { get; set; } = DateTime.Now;
 
     }
    

@@ -26,7 +26,7 @@ namespace websuli.Model
         [Required]
         [Key]
         public Guid FeladatsorID { get; set; } = Guid.NewGuid();  // Calssname  ID  naming convention also makes it key during   generation
-        [Display(Name = "Feladatsornev", Prompt = "Feladatsor Neve:")]
+        [Display(Name = "Feladatsor név", Prompt = "Feladatsor Neve:")]
         public string sornev { get; set; }
         [Display(Name = "Gyerek Neve",Prompt = "Gyerek")]
         [StringLength(50, ErrorMessage = "Max 50 character")]
@@ -43,7 +43,7 @@ namespace websuli.Model
         [Column("ipcim")]
         public string ipcim { get; set; }
 
-        [Display(Name = "kiadasDatum")]
+        [Display(Name = "kiadás Dátum")]
         [DataType(DataType.Date)]
         [DisplayFormat(DataFormatString = "{0:yyyy-MM-dd}", ApplyFormatInEditMode = true)]
         public DateTime kiadasDatum { get; set; } = DateTime.Now;

@@ -20,11 +20,13 @@ namespace websuli.Models
 
         public DbSet<Feladatsor> Feladatsor { get; set; }
         public DbSet<Feladat> Feladat { get; set; }
+        public DbSet<NemetSzo> NemetSzos { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             modelBuilder.Entity<Feladatsor>().ToTable("Feladatsor");
             modelBuilder.Entity<Feladat>().ToTable("Feladatok");
+            //modelBuilder.Entity<NemetSzo>().ToTable("nemetszavak");  /annotacioval van
 
         }
     }

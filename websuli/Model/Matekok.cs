@@ -27,8 +27,8 @@ namespace websuli.Model
         public override string Generate()
         {
             rnd = new Random();
-            Szorzando = rnd.Next(10);
-            Szorzo = rnd.Next(10);
+            Szorzando = rnd.Next(2,10);
+            Szorzo = rnd.Next(2,10);
             Helyesvalasz = (Szorzando * Szorzo).ToString();
             StringBuilder sb = new StringBuilder(" ");
             feladatText = sb.AppendFormat("{0} * {1} = ", Szorzando, Szorzo).ToString();
@@ -46,8 +46,8 @@ namespace websuli.Model
         public override string Generate()
         {
             rnd = new Random();
-            Oszto = rnd.Next(1,10)+1;
-            eredmeny = rnd.Next(1,10)+1;
+            Oszto = rnd.Next(2,10)+1;
+            eredmeny = rnd.Next(2,10)+1;
             Osztando = eredmeny * Oszto;
             Helyesvalasz = eredmeny.ToString();
             StringBuilder sb = new StringBuilder(" ");
@@ -112,7 +112,7 @@ namespace websuli.Model
         public int A;
         public int B;
         [JsonIgnore]
-        public int limit = 1000;
+        public int limit = 10000;
         public override string Generate()
         {
             int mit = rnd.Next(10);
